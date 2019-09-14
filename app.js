@@ -13,7 +13,7 @@ app.post('/', (req,res) => res.send("get a post"));
 
 app.post('/single', (req, res) => {
 	// get video from the frontend
-	const blob = req.blob();
+	const blob = req.body();
 	console.log ('Blob size: ', blob.size);
 	fs.writeFile (
 		`test.mp4`,
