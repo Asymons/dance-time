@@ -43,16 +43,11 @@ const HomePage = (props) => {
 
     const uploadRecording = (blob) => {
         setOutputState(OUTPUT_STATE.RESULT);
-        setUserScores(userScores.concat({name: userScores.length, score: 70 + Math.ceil(Math.random() * 20)}))
-        const url = URL.createObjectURL(blob);
-        console.log(url);
-        setUrl('https://www.youtube.com/watch?v=vzhZVhZLtZA');
-        /*
+        setUserScores(userScores.concat({name: userScores.length, score: 70 + Math.ceil(Math.random() * 20)}));
         UploadVideoService(blob).then(data => {
            console.log(data);
            setUserScores(userScores.concat({name: userScores.length, score: 80}))
         });
-         */
     };
 
     const lastUserScore = userScores.length > 0 ? userScores[userScores.length-1].score : '0';

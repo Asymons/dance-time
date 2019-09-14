@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const host = 'http://localhost:3001/api/';
+const host = 'http://localhost:3000/';
 
 export const call = async (url, params) => {
     const data = await axios.get(`${host}${url}`, { params });
