@@ -4,7 +4,7 @@ import VideoRecorder from 'react-video-recorder';
 import UploadVideoService from '../services/UploadVideoService';
 import ReactPlayer from 'react-player';
 import { CartesianGrid, Cell, Label, Legend, Line, LineChart, Pie, PieChart, Tooltip, XAxis, YAxis } from 'recharts';
-import blackpink from '../blackpink.mp4';
+import boywluv from '../boywluv.mp4';
 import { leaderboards } from '../helpers/firebase';
 import { getRandomName } from '../helpers/randomName';
 
@@ -83,7 +83,7 @@ const HomePage = (props) => {
             </VideoWrapper>
             <VideoWrapper>
                 <Title>What you could be</Title>
-                <ReactPlayer ref={videoRef} width={480} url={blackpink} playing={outputState === OUTPUT_STATE.PLAYING}/>
+                <ReactPlayer ref={videoRef} width={480} url={boywluv} playing={outputState === OUTPUT_STATE.PLAYING}/>
             </VideoWrapper>
         </VideoRowWrapper>
         <VideoRowWrapper>
