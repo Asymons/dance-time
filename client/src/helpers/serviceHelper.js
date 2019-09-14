@@ -13,12 +13,9 @@ export const post = (url, options) => {
 
 export const postFile = (url, file) => {
     const data = new FormData();
-    data.append('file', file, file.name);
-
-    return axios.post(`${host}${url}`, data, {
-        headers: {
-            'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-        },
-        timeout: 30000,
-    });
+    console.log(file);
+    const mp4File = new Blob([file], {type: 'video/mp4'});
+    data.append('upl', mp4File, 'input.mp4');
+    console.log(data, file);
+    return axios.post(`${host}${url}`, data);
 };

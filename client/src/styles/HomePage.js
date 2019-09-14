@@ -42,3 +42,11 @@ export const AppTitle  = styled.div`
     font-weight: 600;
     transform: rotate(-90deg);
 `;
+
+export const UsernameTitle = styled.div`
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    font-size: 16px;
+    font-weight: 600;
+`;

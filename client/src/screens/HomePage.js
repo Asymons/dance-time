@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { AppTitle, Title, VideoRowWrapper, VideoWrapper, Wrapper } from '../styles/HomePage';
+import { AppTitle, Title, UsernameTitle, VideoRowWrapper, VideoWrapper, Wrapper } from '../styles/HomePage';
 import VideoRecorder from 'react-video-recorder';
 import UploadVideoService from '../services/UploadVideoService';
 import ReactPlayer from 'react-player';
 import { CartesianGrid, Cell, Label, Legend, Line, LineChart, Pie, PieChart, Tooltip, XAxis, YAxis } from 'recharts';
 import blackpink from '../blackpink.mp4';
+import { leaderboards } from '../helpers/firebase';
+import { getRandomName } from '../helpers/randomName';
 
 const similarityScore = [
     {
@@ -33,19 +35,23 @@ const HomePage = (props) => {
     const [url, setUrl] = useState('https://www.youtube.com/watch?v=vzhZVhZLtZA');
     const [coloredCharacter, setColoredCharacter] = useState(0);
     const [outputState, setOutputState] = useState(OUTPUT_STATE.PAUSED);
+    const [userName, setUsername] = useState(undefined);
     const videoRef = useRef(null);
 
     useEffect(() => {
         setInterval(() => {
             setColoredCharacter(c => c < appTitle.length - 1 ? c + 1 : 0);
         }, 1000);
+        const randomName = getRandomName().then(name => {
+            setUsername(name);
+        });
     }, []);
 
     const uploadRecording = (blob) => {
         setOutputState(OUTPUT_STATE.RESULT);
         setUserScores(userScores.concat({name: userScores.length, score: 70 + Math.ceil(Math.random() * 20)}));
         UploadVideoService(blob).then(data => {
-           console.log(data);
+           leaderboards.push({name: userName, score: 80});
            setUserScores(userScores.concat({name: userScores.length, score: 80}))
         });
     };
@@ -55,19 +61,22 @@ const HomePage = (props) => {
     return (
         <>
             <AppTitle>{appTitle.split('').map((letter, index) => <span style={{color: index === coloredCharacter ? 'white' : 'black', transition: 'color 0.5s ease'}}>{letter}</span>)}</AppTitle>
+            <UsernameTitle>User: {userName}</UsernameTitle>
     <Wrapper>
         <VideoRowWrapper>
             <VideoWrapper>
                 <Title>You</Title>
                 <VideoRecorder
                     isOnInitially
+                    mimeType="video/webm;codecs=h264"
+                    countdownTime={0}
                     onStartRecording={() => {
                         if(videoRef.current){
                             videoRef.current.seekTo(0);
                         }
                         setTimeout(() => {
                             setOutputState(OUTPUT_STATE.PLAYING);
-                        }, 3000)
+                        }, 0)
                     }}
                     onRecordingComplete={uploadRecording}
                 />

@@ -4,29 +4,27 @@ const port = 3000;
 const fs = require('fs');
 const exec = require('child_process').exec;
 const cors = require('cors');
+const bodyParser = require('body-parser');
+const multer = require('multer');
+const upload = multer();
+const type = upload.single('upl');
+const save = require('save-file');
 
 app.use(cors());
-
+// parse application/json
+app.use(bodyParser.json());
 
 //const blob = require('blob')
 app.post('/', (req,res) => res.send("get a post"));
 
-app.post('/single', (req, res) => {
+app.post('/single', type, async (req, res) => {
 	// get video from the frontend
-	const blob = req.body();
-	console.log ('Blob size: ', blob.size);
-	fs.writeFile (
-		`test.mp4`,
-		blob,
-		(err) => {
-			if (err) {
-				console.log (`Error writing video`, err);
-			}
-		}
-	);
+	const file = req.file;
+	await save(file, 'test.mp4');
 
 	//const userVideo = "test.mp4";
 	//python call
+	/*
 	exec("python player1.mp4 > output.mp4", (error, stdout, stderr) => {
 	  if (!error) {
 	  	//const output = fs.
@@ -36,6 +34,7 @@ app.post('/single', (req, res) => {
 	  	console.log("Python code failed to terminate");
 	  }
 	});
+	*/
 	res.send({
 		message: 'Resolved',
 	})
