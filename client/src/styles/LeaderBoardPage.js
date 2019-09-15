@@ -31,6 +31,10 @@ export const CellWrapper = styled.div`
 	margin: 10px 0;
 	justify-content: space-around;
 	align-items: center;
+	
+	:hover {
+	    cursor: pointer;
+	}
 `;
 
 export const PositionText = styled.div`

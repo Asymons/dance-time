@@ -9,6 +9,8 @@ import {
     Title,
     Wrapper
 } from '../../styles/LeaderBoardPage';
+import { withRouter } from 'react-router';
+import { nameToId } from '../../helpers/nameHelper';
 
 const sortFn = (a,b) => {
     const { score: score1 } = a;
@@ -22,7 +24,7 @@ const sortFn = (a,b) => {
     }
 };
 
-const LeaderBoardPage = (props) => {
+const LeaderBoardPage = ({ history }) => {
     const [data, setData] = useState([]);
     useEffect(() => {
         leaderboards.once('value').then(snapshot => {
@@ -38,7 +40,10 @@ const LeaderBoardPage = (props) => {
                 {
                     data.map(({name, score}, index) => {
                         return (
-                            <CellWrapper>
+                            <CellWrapper onClick={() => {
+                                const id = nameToId(name);
+                                history.push(`/result/${id}`);
+                            }}>
                                 <PositionText>{index+1}</PositionText>
                                 <NameText>{name}</NameText>
                                 <ScoreText>{score}</ScoreText>
@@ -51,4 +56,4 @@ const LeaderBoardPage = (props) => {
     );
 };
 
-export default LeaderBoardPage;
+export default withRouter(LeaderBoardPage);
