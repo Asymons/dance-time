@@ -68,6 +68,7 @@ const HomePage = (props) => {
                 <Title>You</Title>
                 <VideoRecorder
                     isOnInitially
+                    timeLimit={38000}
                     mimeType="video/webm;codecs=h264"
                     countdownTime={0}
                     onStartRecording={() => {
