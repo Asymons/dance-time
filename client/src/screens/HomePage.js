@@ -82,6 +82,9 @@ const HomePage = (props) => {
                     }}
                     onRecordingComplete={uploadRecording}
                 />
+                {/* <video id="videoPlayer" controls>
+                    <source src="http://localhost:3000/video/output.mp4" type="video/mp4" />
+                </video> */}
             </VideoWrapper>
             <VideoWrapper>
                 <Title>What you could be</Title>
