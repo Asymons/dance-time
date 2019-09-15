@@ -39,7 +39,7 @@ export const getRandomName = async () => {
     let leaderboardName = 'Guest';
     while(retries < maxRetries){
         let unique = true;
-        const randomName = `${colors[Math.floor(Math.random() * colors.length)]} ${animalNames[Math.floor(Math.random() * animalNames.length)]}`;
+        const randomName = `${colors[Math.floor(Math.random() * colors.length)]}-${animalNames[Math.floor(Math.random() * animalNames.length)]}`;
         Object.keys(value).forEach(key => {
             if(value[key].name === randomName){
                 unique = false;
