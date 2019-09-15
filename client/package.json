@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.19.0",
     "firebase": "^6.6.1",
     "history": "^4.10.1",
     "react": "^16.9.0",
@@ -11,6 +12,7 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
+    "react-video-recorder": "^3.11.0",
     "recharts": "^1.7.1",
     "styled-components": "^4.3.2"
   },
