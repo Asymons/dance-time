@@ -26,14 +26,14 @@ export const TableWrapper = styled.div`
 export const CellWrapper = styled.div`
 	width: calc(100% - 20px);
 	max-width: 720px;
-	padding: 0 10px;
+	padding: 10px;
 	display: flex;
-	margin: 10px 0;
 	justify-content: space-around;
 	align-items: center;
 	
 	:hover {
 	    cursor: pointer;
+	    color: #FFD300;
 	}
 `;
 

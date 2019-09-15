@@ -37,7 +37,13 @@ const ResultPage = ({ match }) => {
                   <VideoWrapper>
                       <Subtitle>You</Subtitle>
                       <video style={{width: 480}} id="videoPlayer" controls>
-                          <source src={`http://localhost:3000/video/${id}-before.mp4`} type="video/mp4" />
+                          <source src={`http://localhost:3000/video/${id}-og.mp4`} type="video/mp4" />
+                      </video>
+                  </VideoWrapper>
+                  <VideoWrapper>
+                      <Subtitle>How you move</Subtitle>
+                      <video style={{width: 480}} id="videoPlayer" controls>
+                          <source src={`http://localhost:3000/video/${id}-skeleton.mp4`} type="video/mp4" />
                       </video>
                   </VideoWrapper>
                   <VideoWrapper>

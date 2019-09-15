@@ -58,11 +58,11 @@ const HomePage = ({history}) => {
 
     const uploadRecording = (blob) => {
         setOutputState(OUTPUT_STATE.RESULT);
+        setUserScores(userScores.concat({name: userScores.length, score: 80}));
         UploadVideoService(blob, nameToId(userName)).then(data => {
-           leaderboards.push({name: userName, score: 80});
-           setUserScores(userScores.concat({name: userScores.length, score: 80}));
-           console.log(data);
-            setResultUrl(URL.createObjectURL(data));
+           // leaderboards.push({name: userName, score: 80});
+           // setUserScores(userScores.concat({name: userScores.length, score: 80}));
+           // setResultUrl(URL.createObjectURL(data));
         });
     };
 
@@ -95,13 +95,7 @@ const HomePage = ({history}) => {
             </VideoWrapper>
             <VideoWrapper>
                 <Title>What you could be</Title>
-                {
-                    outputState === OUTPUT_STATE.RESULT ? (
-                        <ReactPlayer width={480} url={resultUrl} playing controls/>
-                    ) : (
-                        <ReactPlayer ref={videoRef} width={480} url={dance} playing={outputState === OUTPUT_STATE.PLAYING}/>
-                    )
-                }
+                <ReactPlayer ref={videoRef} width={480} url={dance} playing={outputState === OUTPUT_STATE.PLAYING}/>
             </VideoWrapper>
         </VideoRowWrapper>
         <VideoRowWrapper>
@@ -110,22 +104,12 @@ const HomePage = ({history}) => {
                     userScores.length === 0 && <Title>Start Dancing!</Title>
                 }
                 {
-                    userScores.length === 1 && <Title>Last Similarity Score: {lastUserScore}%</Title>
-                }
-                {
-                    userScores.length > 1 && (
-                        <LineChart width={480} height={280} data={userScores}>
-                            <XAxis dataKey="name" stroke="#F3F3F3" />
-                            <YAxis stroke="#F3F3F3"/>
-                            <Legend />
-                            <Line type="monotone" dataKey="score" stroke="#F3F3F3" />
-                        </LineChart>
-                    )
+                    userScores.length >= 1 && <Title>Check back later for your score!</Title>
                 }
             </VideoWrapper>
             <VideoWrapper>
                 {
-                    userScores.length > 0 ? (
+                    userScores.length === -1 ? (
                         <PieChart width={300} height={300}>
                             <Pie
                                 data={similarityScore}
