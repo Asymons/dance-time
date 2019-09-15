@@ -37,7 +37,6 @@ export const getRandomName = async () => {
     const snapshot = await leaderboards.once('value');
     const value = snapshot.val();
     let leaderboardName = 'Guest';
-    debugger;
     while(retries < maxRetries){
         let unique = true;
         const randomName = `${colors[Math.floor(Math.random() * colors.length)]} ${animalNames[Math.floor(Math.random() * animalNames.length)]}`;

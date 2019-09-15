@@ -19,7 +19,7 @@ export const TableWrapper = styled.div`
 	max-width: 720px;
 	padding: 0 10px;
 	display: flex;
-	flex-direction: columnn;
+	flex-direction: column;
 	align-items: center;
 `;
 
@@ -34,14 +34,21 @@ export const CellWrapper = styled.div`
 `;
 
 export const PositionText = styled.div`
+    width: 100%;
 	font-size: 16px;
 	font-weight: 600;
+	text-align: center;
 `;
 
 export const NameText = styled.div`
+    width: 100%;
 	font-size: 16px;
+		text-align: center;
 `;
 
 export const ScoreText = styled.div`
+    width: 100%;
 	font-size: 16px;
+		text-align: center;
+
 `;
