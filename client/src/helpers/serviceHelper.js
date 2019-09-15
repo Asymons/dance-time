@@ -13,7 +13,9 @@ export const post = (url, options) => {
 
 export const postFile = (url, file, username) => {
     const data = new FormData();
+    console.log(file);
     const mp4File = new Blob([file], {type: 'video/mp4'});
-    data.append('upl', mp4File, `${username}.mp4`);
+    data.append('upl', mp4File, username + '.mp4');
+    console.log(data, file);
     return axios.post(`${host}${url}`, data);
 };
