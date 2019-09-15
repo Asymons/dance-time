@@ -50,3 +50,15 @@ export const UsernameTitle = styled.div`
     font-size: 16px;
     font-weight: 600;
 `;
+
+export const LeaderboardButton = styled.div`
+    position: fixed;
+    border-radius: 2px;
+    width: 100px;
+    top: 40px;
+    right: 10px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #FFD300; 
+    color: white;
+`;

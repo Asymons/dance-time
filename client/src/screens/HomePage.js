@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { AppTitle, Title, UsernameTitle, VideoRowWrapper, VideoWrapper, Wrapper } from '../styles/HomePage';
+import {
+    AppTitle,
+    LeaderboardButton,
+    Title,
+    UsernameTitle,
+    VideoRowWrapper,
+    VideoWrapper,
+    Wrapper
+} from '../styles/HomePage';
 import VideoRecorder from 'react-video-recorder';
 import UploadVideoService from '../services/UploadVideoService';
 import ReactPlayer from 'react-player';
@@ -7,6 +15,7 @@ import { Cell, Label, Legend, Line, LineChart, Pie, PieChart, Tooltip, XAxis, YA
 import dance from '../dance.mp4';
 import { leaderboards } from '../helpers/firebase';
 import { getRandomName } from '../helpers/randomName';
+import { nameToId } from '../helpers/nameHelper';
 
 const similarityScore = [
     {
@@ -29,7 +38,7 @@ const OUTPUT_STATE = {
     RESULT: 3
 };
 
-const HomePage = (props) => {
+const HomePage = ({history}) => {
 
     const [userScores, setUserScores] = useState([]);
     const [resultUrl, setResultUrl] = useState('');
@@ -49,7 +58,7 @@ const HomePage = (props) => {
 
     const uploadRecording = (blob) => {
         setOutputState(OUTPUT_STATE.RESULT);
-        UploadVideoService(blob, userName).then(data => {
+        UploadVideoService(blob, nameToId(userName)).then(data => {
            leaderboards.push({name: userName, score: 80});
            setUserScores(userScores.concat({name: userScores.length, score: 80}));
            console.log(data);
@@ -64,6 +73,7 @@ const HomePage = (props) => {
         <>
             <AppTitle>{appTitle.split('').map((letter, index) => <span style={{color: index === coloredCharacter ? 'white' : 'black', transition: 'color 0.5s ease'}}>{letter}</span>)}</AppTitle>
             <UsernameTitle>User: {userName}</UsernameTitle>
+            <LeaderboardButton onClick={() => history.push('/leaderboard')}>Leaderboard</LeaderboardButton>
     <Wrapper>
         <VideoRowWrapper>
             <VideoWrapper>
@@ -82,9 +92,6 @@ const HomePage = (props) => {
                     }}
                     onRecordingComplete={uploadRecording}
                 />
-                {/* <video id="videoPlayer" controls>
-                    <source src="http://localhost:3000/video/output.mp4" type="video/mp4" />
-                </video> */}
             </VideoWrapper>
             <VideoWrapper>
                 <Title>What you could be</Title>
