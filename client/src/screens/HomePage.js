@@ -3,8 +3,8 @@ import { AppTitle, Title, UsernameTitle, VideoRowWrapper, VideoWrapper, Wrapper 
 import VideoRecorder from 'react-video-recorder';
 import UploadVideoService from '../services/UploadVideoService';
 import ReactPlayer from 'react-player';
-import { CartesianGrid, Cell, Label, Legend, Line, LineChart, Pie, PieChart, Tooltip, XAxis, YAxis } from 'recharts';
-import boywluv from '../boywluv.mp4';
+import { Cell, Label, Legend, Line, LineChart, Pie, PieChart, Tooltip, XAxis, YAxis } from 'recharts';
+import dance from '../dance.mp4';
 import { leaderboards } from '../helpers/firebase';
 import { getRandomName } from '../helpers/randomName';
 
@@ -32,7 +32,7 @@ const OUTPUT_STATE = {
 const HomePage = (props) => {
 
     const [userScores, setUserScores] = useState([]);
-    const [url, setUrl] = useState('https://www.youtube.com/watch?v=vzhZVhZLtZA');
+    const [resultUrl, setResultUrl] = useState('');
     const [coloredCharacter, setColoredCharacter] = useState(0);
     const [outputState, setOutputState] = useState(OUTPUT_STATE.PAUSED);
     const [userName, setUsername] = useState(undefined);
@@ -42,19 +42,21 @@ const HomePage = (props) => {
         setInterval(() => {
             setColoredCharacter(c => c < appTitle.length - 1 ? c + 1 : 0);
         }, 1000);
-        const randomName = getRandomName().then(name => {
+        getRandomName().then(name => {
             setUsername(name);
         });
     }, []);
 
     const uploadRecording = (blob) => {
         setOutputState(OUTPUT_STATE.RESULT);
-        setUserScores(userScores.concat({name: userScores.length, score: 70 + Math.ceil(Math.random() * 20)}));
         UploadVideoService(blob).then(data => {
            leaderboards.push({name: userName, score: 80});
-           setUserScores(userScores.concat({name: userScores.length, score: 80}))
+           setUserScores(userScores.concat({name: userScores.length, score: 80}));
+           console.log(data);
+            setResultUrl(URL.createObjectURL(data));
         });
     };
+
 
     const lastUserScore = userScores.length > 0 ? userScores[userScores.length-1].score : '0';
 
@@ -68,23 +70,28 @@ const HomePage = (props) => {
                 <Title>You</Title>
                 <VideoRecorder
                     isOnInitially
-                    timeLimit={38000}
+                    timeLimit={10000}
                     mimeType="video/webm;codecs=h264"
-                    countdownTime={0}
                     onStartRecording={() => {
                         if(videoRef.current){
                             videoRef.current.seekTo(0);
                         }
                         setTimeout(() => {
                             setOutputState(OUTPUT_STATE.PLAYING);
-                        }, 0)
+                        }, 3000)
                     }}
                     onRecordingComplete={uploadRecording}
                 />
             </VideoWrapper>
             <VideoWrapper>
                 <Title>What you could be</Title>
-                <ReactPlayer ref={videoRef} width={480} url={boywluv} playing={outputState === OUTPUT_STATE.PLAYING}/>
+                {
+                    outputState === OUTPUT_STATE.RESULT ? (
+                        <ReactPlayer width={480} url={resultUrl} playing controls/>
+                    ) : (
+                        <ReactPlayer ref={videoRef} width={480} url={dance} playing={outputState === OUTPUT_STATE.PLAYING}/>
+                    )
+                }
             </VideoWrapper>
         </VideoRowWrapper>
         <VideoRowWrapper>
@@ -98,7 +105,6 @@ const HomePage = (props) => {
                 {
                     userScores.length > 1 && (
                         <LineChart width={480} height={280} data={userScores}>
-                            <CartesianGrid stroke="#F3F3F3"/>
                             <XAxis dataKey="name" stroke="#F3F3F3" />
                             <YAxis stroke="#F3F3F3"/>
                             <Legend />

@@ -35,9 +35,9 @@ app.post('/single', type, async (req, res) => {
 	  }
 	});
 	*/
-	res.send({
-		message: 'Resolved',
-	})
+	fs.readFile('new-dance.mp4', (err, data) => {
+		res.send(data);
+	});
 });
 
 app.get('/double', (req, res) => {
