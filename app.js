@@ -20,7 +20,7 @@ app.post('/', (req,res) => res.send("get a post"));
 app.post('/single', type, async (req, res) => {
 	// get video from the frontend
 	const file = req.file;
-	await save(file, 'test.mp4');
+	await save(file, file.originalname);
 
 	//const userVideo = "test.mp4";
 	//python call

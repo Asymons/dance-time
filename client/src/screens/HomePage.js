@@ -49,7 +49,7 @@ const HomePage = (props) => {
 
     const uploadRecording = (blob) => {
         setOutputState(OUTPUT_STATE.RESULT);
-        UploadVideoService(blob).then(data => {
+        UploadVideoService(blob, userName).then(data => {
            leaderboards.push({name: userName, score: 80});
            setUserScores(userScores.concat({name: userScores.length, score: 80}));
            console.log(data);

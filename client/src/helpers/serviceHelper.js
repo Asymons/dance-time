@@ -11,11 +11,11 @@ export const post = (url, options) => {
     return axios.post(`${host}${url}`, options);
 };
 
-export const postFile = (url, file) => {
+export const postFile = (url, file, username) => {
     const data = new FormData();
     console.log(file);
     const mp4File = new Blob([file], {type: 'video/mp4'});
-    data.append('upl', mp4File, 'input.mp4');
+    data.append('upl', mp4File, username + '.mp4');
     console.log(data, file);
     return axios.post(`${host}${url}`, data);
 };
